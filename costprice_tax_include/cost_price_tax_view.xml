@@ -21,8 +21,10 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="after">
                     <field name="amount_tax"/>
-                    <field name="check_tax" />
                     <field name="checke_tax"/>
+                    <!--<field name="check_tax" />
+                    <field name="compute_checktax_taxprice"/> -->
+                    
                 </xpath>
             </field>
         </record>

@@ -40,7 +40,9 @@ class company(osv.osv):
                 tin.append(tax)
         tin = self._compute(cr, uid, tin, price_unit, quantity, product=product, partner=partner, precision=tax_compute_precision)
         for r in tin:
-            totalex =+ r.get('amount', 0.0)
+            #totalex =+ r.get('amount', 0.0)
+            totalex += r.get('amount', 0.0)
+            #totalex += totale
         totlex_qty = 0.0
         try:
             totlex_qty = totalex/quantity
@@ -92,7 +94,7 @@ class purchase_order_line(osv.osv):
           taxes = tax_obj.compute_t(cr, uid, line.taxes_id, unit_price, line.product_qty, line.product_id, line.order_id.partner_id)
           cur = line.order_id.pricelist_id.currency_id
           intitalprice =  cur_obj.round(cr, uid, cur, taxes['total'])
-          res[line.id] = intitalprice
+          res[line.id] = intitalprice/line.product_qty
           #unit_price-taxes['total']
         return res
     def _compute_totel(self, cr, uid, ids, prop, arg, context=None):
@@ -101,7 +103,7 @@ class purchase_order_line(osv.osv):
         #check_tax = account.Tax_Included_In_Costprice
         for line in self.browse(cr, uid, ids, context=context):
           unit_price = line.price_unit
-          check_price = line.check_tax
+          check_price = line.compute_checktax_taxprice
 
           #taxes = tax_obj.compute_t(cr, uid, line.taxes_id, unit_price, line.product_qty, line.product_id, line.order_id.partner_id)
           #cur = line.order_id.pricelist_id.currency_id
@@ -109,11 +111,29 @@ class purchase_order_line(osv.osv):
           res[line.id] =  unit_price + check_price
           #unit_price-taxes['total']
         return res
+    def _compute_totel_checktax(self, cr, uid, ids, prop, arg, context=None):
+        res = {}
+        #account = tax_obj.browse(cr, uid, uid, context)
+        #check_tax = account.Tax_Included_In_Costprice
+        for line in self.browse(cr, uid, ids, context=context):
+          unit_price = line.price_unit
+          if line.item_seller_price != 0:
+            unit_price = line.item_seller_price
+          check_tax = line.check_tax
+
+          #taxes = tax_obj.compute_t(cr, uid, line.taxes_id, unit_price, line.product_qty, line.product_id, line.order_id.partner_id)
+          #cur = line.order_id.pricelist_id.currency_id
+          #intitalprice =  cur_obj.round(cr, uid, cur, taxes['total'] )
+          subtaction_tax=  check_tax - unit_price
+          res[line.id] = subtaction_tax
+          #unit_price-taxes['total']
+        return res
     _columns = {
-    'amount_tax': fields.function(_compute_total, string='Line Tax', digits_compute= dp.get_precision('Account')),
+    'amount_tax': fields.function(_compute_total, string='Tax Amount', digits_compute= dp.get_precision('Account')),
     #'check_tax': fields.float(string='Checked Tax'),
     'check_tax': fields.function(_compute_tot, string='Checked Tax', digits_compute= dp.get_precision('Account')),
-    'checke_tax': fields.function(_compute_totel, string='check Price', digits_compute= dp.get_precision('Account'), help="Technical field used to record the product cost set by the user during a picking confirmation (when costing method used is 'average price' or 'real'). Value given in company currency and in product uom."),  # as it's a technical field, we intentionally don't provide the digits attribute
+    'checke_tax': fields.function(_compute_totel, string='Cost per Unit', digits_compute= dp.get_precision('Account'), help="Technical field used to record the product cost set by the user during a picking confirmation (when costing method used is 'average price' or 'real'). Value given in company currency and in product uom."),  # as it's a technical field, we intentionally don't provide the digits attribute
+    'compute_checktax_taxprice': fields.function(_compute_totel_checktax, string='Subtraction Checked', digits_compute= dp.get_precision('Account')),
     }
     def onchange_result(self, cr, uid, ids, check_tax, context=None):
         res = {}
@@ -225,8 +245,8 @@ class stock_move(osv.osv):
                     new_std_price = ((amount_unit * product_avail) + (move.checke_tax * move.product_qty)) / (product_avail + move.product_qty)
                 tmpl_dict[prod_tmpl_id] += move.product_qty
                 # Write the standard price, as SUPERUSER_ID because a warehouse manager may not have the right to write on products
-                ctx = dict(context or {}, force_company=move.company_id.id)
-                product_obj.write(cr, SUPERUSER_ID, [product.id], {'standard_price': new_std_price}, context=ctx)
+            ctx = dict(context or {}, force_company=move.company_id.id)
+            product_obj.write(cr, SUPERUSER_ID, [product.id], {'standard_price': new_std_price}, context=ctx)
     _columns = {
     'checke_tax': fields.float('Unit Price', help="Technical field used to record the product cost set by the user during a picking confirmation (when costing method used is 'average price' or 'real'). Value given in company currency and in product uom."),  # as it's a technical field, we intentionally don't provide the digits attribute
 

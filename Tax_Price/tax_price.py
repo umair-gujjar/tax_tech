@@ -26,7 +26,7 @@ class purchase_order_line(osv.osv):
     _columns = {
 
                  'item_seller_price' : fields.float('Tax Price'),
-                 'price_subtotal': fields.function(_amount_line, string='Subtotal', digits_compute= dp.get_precision('Account')),
+                 #'price_subtotal': fields.function(_amount_line, string='Subtotal', digits_compute= dp.get_precision('Account')),
 
                  }
 
@@ -105,7 +105,7 @@ class purchase_order(osv.osv):
             'item_seller_price': order_line.item_seller_price,
             'quantity': order_line.product_qty,
             'product_id': order_line.product_id.id or False,
-            'item_seller_price':order_line.item_seller_price,
+            #'item_seller_price':order_line.item_seller_price,
             'uos_id': order_line.product_uom.id or False,
             'invoice_line_tax_id': [(6, 0, [x.id for x in order_line.taxes_id])],
             'account_analytic_id': order_line.account_analytic_id.id or False,
@@ -162,16 +162,16 @@ class invoice_line(models.Model):
        
     _inherit ='account.invoice.line'
     item_seller_price = fields.Float('Tax Price')          
-    @api.depends('price_unit','item_seller_price', 'discount', 'invoice_line_tax_id', 'quantity',
-        'product_id', 'invoice_id.partner_id', 'invoice_id.currency_id')
-    def _compute_price(self):
-        price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
-        if self.item_seller_price != 0:
-            price = self.item_seller_price * (1 - (self.discount or 0.0) / 100.0)
-        taxes = self.invoice_line_tax_id.compute_all(price, self.quantity, product=self.product_id, partner=self.invoice_id.partner_id)
-        self.price_subtotal = taxes['total']
-        if self.invoice_id:
-            self.price_subtotal = self.invoice_id.currency_id.round(self.price_subtotal)
+    #@api.depends('price_unit','item_seller_price', 'discount', 'invoice_line_tax_id', 'quantity',
+    #    'product_id', 'invoice_id.partner_id', 'invoice_id.currency_id')
+    #def _compute_price(self):
+    #    price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
+        #if self.item_seller_price != 0:
+        #    price = self.item_seller_price * (1 - (self.discount or 0.0) / 100.0)
+     #   taxes = self.invoice_line_tax_id.compute_all(price, self.quantity, product=self.product_id, partner=self.invoice_id.partner_id)
+      #  self.price_subtotal = taxes['total']
+      #  if self.invoice_id:
+       #     self.price_subtotal = self.invoice_id.currency_id.round(self.price_subtotal)
     
 #invoice_line()    
 #from openerp.osv import osv,  fields
