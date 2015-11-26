@@ -9,8 +9,7 @@
 	""",
     'author': 'Ehtisham Faisal',
     'depends': ['project'],
-    'data': ['project_task_view.xml',
-    'wizard/hr_timesheet_sign_in_out_view.xml',],
+    'data': ['project_task_view.xml',],
     'installable': True,
     'auto_install': False,
 }

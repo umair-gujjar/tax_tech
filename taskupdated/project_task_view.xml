@@ -9,15 +9,12 @@
             <field name="arch" type="xml">           
                             <field name="work_ids" groups="project.group_tasks_work_on_tasks" >
                                 <tree string="Task Work" editable="top" >
-                                    <field name="entries_col" on_change="onchange_result(entries_col,sal_col)" />
-                                    <!--<field name="sal_col" on_change="onchange_result(entries_col,sal_col)"/>
-                                    <field name="total_sal"  />
-                                    <field name="name"/> -->
+                                    <field name="entries_col" />
+                                    <field name="name"/>
                                     <field name="hours"/>
-                                    <field name="date" />
-                                    <button name="MyInitiateTask" string="Start Time" type="object"  class="oe_highlight"/>
+                                    <button name="MyInitiateTask" string="Start Time" type="object"  class="oe_highlight" attrs="{'invisible': [('Diff_date','!=','/')]}"/>
                                     <field name="SDate" string="Start Task" on_change="STask(SDate,EDate)"  />
-                                    <button name="MyFinalTask" string="End Time" type="object"  class="oe_highlight"/>
+                                    <button name="MyFinalTask" string="End Time" type="object"  class="oe_highlight" attrs="{'invisible': [('Diff_date','!=','/')]}"/>
                                     <field name="EDate" string="End Task" on_change="STask(SDate,EDate)"/>
                                     <field name="Diff_date"/>
                                     <field name="user_id"/>
