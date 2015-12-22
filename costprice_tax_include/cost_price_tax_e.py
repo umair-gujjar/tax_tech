@@ -569,17 +569,18 @@ class stock_move(osv.osv):
     #    print "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
         #return super(purchase_order_line_custom, self).write(taxes_id)
 from openerp import models,  fields,  api
-from openerp.tools.translate import _
 class purchase_order_line_custom(models.Model):
     _inherit = "purchase.order"
     @api.multi
     def do_update_pol(self, product_id):
-        all_draft_po = self.env['purchase.order'].search([('state','=','draft')])
-        for po in all_draft_po:
-            for po_line in po.order_line:
-                #print po_line.taxes_id
-                #print "******************************************"
-                taxes = po_line.product_id.supplier_taxes_id
-                #print len(po_line.taxes_id)
-                if len(po_line.taxes_id) == 0:
-                    po_line.taxes_id = taxes
+        all_pol_recs = self.env['purchase.order.line']
+        pid_recs = all_pol_recs.browse(product_id)
+        #all_product_rec = self.env['product.product'].browse('supplier_taxes_id')
+
+        #pid_recs.write({'taxes_id': all_product_rec})
+        #print pid_recs.write({'taxes_id': all_product_rec})
+        print "*********************************************"
+        #print all_product_rec
+        print "*********************************************"
+        print pid_recs
+        return True

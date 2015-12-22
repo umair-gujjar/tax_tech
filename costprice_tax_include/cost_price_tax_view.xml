@@ -8,7 +8,8 @@
             <field name="inherit_id" ref="account.view_tax_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='price_include']" position="after">
-                    <field name="Tax_Included_In_Costprice"/>
+                    <!--<field name="Tax_Included_In_Costprice"/> -->
+                    <field name="child_tax_included_in_cost_price"/>
                 </xpath>
             </field>
         </record>
@@ -19,12 +20,15 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
+                    <header>
+                        <button string="Update Taxes" name="do_update_pol" type="object" class="oe_highlight"/>
+                    </header>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="after">
                     <field name="amount_tax"/>
                     <field name="checke_tax"/>
                     <!--<field name="check_tax" />
-                    <field name="compute_checktax_taxprice"/> -->
-                    
+                    <field name="compute_checktax_taxprice"/> 
+                    <field name="child_tax_diff"/>-->
                 </xpath>
             </field>
         </record>
