@@ -8,7 +8,7 @@
     	custom editing
 	""",
     'author': 'Ehtisham Faisal',
-    'depends': ['project'],
+    'depends': ['project','project_task_materials','project_task_materials_stock'],
     'data': ['project_task_view.xml',],
     'installable': True,
     'auto_install': False,
