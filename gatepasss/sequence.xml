@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.sequence.type" id="seq_type_emp_id">
+            <field name="name">Name</field>
+            <field name="code">outwardret</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id">
+            <field name="name">Name</field>
+            <field name="code">outwardret</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+        <record model="ir.sequence.type" id="seq_type_emp_id1">
+            <field name="name">Name</field>
+            <field name="code">inwardpass</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id1">
+            <field name="name">Name</field>
+            <field name="code">inwardpass</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+          <record model="ir.sequence.type" id="seq_type_emp_id2">
+            <field name="name">Name</field>
+            <field name="code">inwardshop</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id2">
+            <field name="name">Name</field>
+            <field name="code">inwardshop</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+          <record model="ir.sequence.type" id="seq_type_emp_id3">
+            <field name="name">Name</field>
+            <field name="code">outwardpass</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id3">
+            <field name="name">Name</field>
+            <field name="code">outwardpass</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+          <record model="ir.sequence.type" id="seq_type_emp_id4">
+            <field name="name">Name</field>
+            <field name="code">outwardshop</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id4">
+            <field name="name">Name</field>
+            <field name="code">outwardshop</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+          <record model="ir.sequence.type" id="seq_type_emp_id5">
+            <field name="name">Name</field>
+            <field name="code">inwardgen</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id5">
+            <field name="name">Name</field>
+            <field name="code">inwardgen</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+          <record model="ir.sequence.type" id="seq_type_emp_id6">
+            <field name="name">Name</field>
+            <field name="code">outwardgen</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id6">
+            <field name="name">Name</field>
+            <field name="code">outwardgen</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+          <record model="ir.sequence.type" id="seq_type_emp_id7">
+            <field name="name">Name</field>
+            <field name="code">inwardret</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_emp_id7">
+            <field name="name">Name</field>
+            <field name="code">inwardret</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+        
+
+    </data>
+</openerp>
